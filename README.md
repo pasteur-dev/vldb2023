@@ -4,13 +4,23 @@
     <img alt="Pasteur Logo" src="https://raw.githubusercontent.com/pasteur-dev/pasteur-web/master/assets/img/logo_light.svg" height="150px" align="left">
 </picture>
 <h1>
-    <i>Reproduce:</i>
-    "Pasteur: Scaling Private Data Synthesis"
+    Pasteur: Scaling Private Data Synthesis<br>
+    <i>Supplemental Material</i>
 </h1>
 
-This readme explains how to reproduce the experiments from the paper with the
-above title ([extended version](./pasteur_extended.pdf)).
-In this directory, you will find the scripts relevant to executing the experiments.
+This repository contains the supplemental materials for the paper 
+"Pasteur: Scaling Private Data Synthesis", including an 
+[extended version](./pasteur_extended.pdf) of the paper.
+The source code of the system Pasteur is found in the main repository
+[github.com/pasteur-dev/pasteur](https://github.com/pasteur-dev/pasteur) and
+the version used for the paper is tagged with `vldb2023`.
+
+In this repository, you will find a copy of the experiment scripts, to make
+previewing them more convenient.
+The original versions that should be used for reproduction and their development
+history are part of the main repository.
+
+# Reproduction Steps
 
 ## Prerequisites
 
@@ -32,7 +42,7 @@ sudo apt install python3.10 python3.10-dev python3.10-venv
 ### Pasteur + Dependencies
 ```bash
 # Clone and cd
-git clone https://github.com/pasteur-dev/pasteur # -b paper
+git clone https://github.com/pasteur-dev/pasteur -b vldb2023
 cd pasteur
 
 # Create a virtual environment
@@ -148,7 +158,7 @@ pasteur download --accept mimic_iv_1_0
 ```
 > Warning: MIMIC requires credentialed access from [physionet](https://physionet.org/content/mimiciv/2.2/).
 > You will be asked for your account credentials. 
-> Downloader source code: [src/pasteur/extras/download.py](../../src/pasteur/extras/download.py)
+> Downloader source code: [src/pasteur/extras/download.py](https://github.com/pasteur-dev/pasteur/blob/vldb2023/src/pasteur/extras/download.py)
 
 ### Ingestion
 After downloading the datasets, run the following commands to ingest them:
@@ -169,7 +179,7 @@ pasteur pipe mimic_billion.ingest
 ### Sidenote
 Experiments ran with Jupyter have been commited with their results as used
 in the paper in this folder.
-They have been cleaned to remove computer specific metadata with [notebooks/utils/nbstripout](../../notebooks/utils/nbstripout) prior to commiting.
+They have been cleaned to remove computer specific metadata with [notebooks/utils/nbstripout](https://github.com/pasteur-dev/pasteur/blob/vldb2023/notebooks/utils/nbstripout) prior to commiting.
 This script was designed to make notebooks diffable and to make two executions in
 different computers appear the same by removing all changing metadata.
 
@@ -183,7 +193,7 @@ Initially, `formats.ipynb` was used for the whole table.
 But it was found that `pd.to_csv()` was slow and painted a bad picture.
 As of this writing, `pandas` uses its own engine for saving CSV files.
 When using PyArrow, CSV saves in a comparable time with Parquet files.
-`formats_save.sh` uses Pasteur's export function, found in [src/pasteur/kedro/cli.py](../../src/pasteur/kedro/cli.py).
+`formats_save.sh` uses Pasteur's export function, found in [src/pasteur/kedro/cli.py](https://github.com/pasteur-dev/pasteur/blob/vldb2023/src/pasteur/kedro/cli.py).
 The underlying implementation uses PyArrow (`df.to_parquet()` uses PyArrow as well).
 Time from the message `Starting export of...` was used in the paper.
 
@@ -249,7 +259,7 @@ src/pasteur/
     -- synth.py
     -- metric.py
 ```
-You can edit which modules are enabled in [src/project/settings.py](../../src/project/settings.py).
+You can edit which modules are enabled in [src/project/settings.py](https://github.com/pasteur-dev/pasteur/blob/vldb2023/src/project/settings.py).
 ```python
 from pasteur.extras import get_recommended_modules
 from pasteur.extras.synth.pgm import AIM, MST
@@ -263,7 +273,7 @@ PASTEUR_MODULES = get_recommended_modules() + [
 ```
 
 ### Texas Dataset
-The initial version of the paper used the Texas Dataset table charges for 1B rows
+The initial version of the paper used the Texas Dataset table charges for 1B rows.
 But was scraped in favor of MIMIC due to low data quality.
 In the version of Pasteur related to the paper you can work with it by:
 ```bash
