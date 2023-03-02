@@ -18,7 +18,8 @@ the version used for the paper is tagged with `vldb2023`.
 In this repository, you will find a copy of the experiment scripts, to make
 previewing them more convenient.
 The original versions that should be used for reproduction and their development
-history are part of the main repository.
+history are part of the main repository (in 
+[./notebooks/paper](https://github.com/pasteur-dev/pasteur/blob/vldb2023/notebooks/paper)).
 
 # Reproduction Steps
 
@@ -183,8 +184,8 @@ They have been cleaned to remove computer specific metadata with [notebooks/util
 This script was designed to make notebooks diffable and to make two executions in
 different computers appear the same by removing all changing metadata.
 
-### Memory Usage
-Memory use based on format (Table 1) can be reproduced from the files 
+### Memory Usage (extended version only)
+Memory use and save times based on format can be reproduced from the files 
 [formats.ipynb](formats.ipynb), and [formats_save.sh](formats_save.sh).
 The easiest way to compare naive to optimised encoding was to load the optimized
 artifacts and de-optimise them with `df.astype()`.
@@ -198,11 +199,11 @@ The underlying implementation uses PyArrow (`df.to_parquet()` uses PyArrow as we
 Time from the message `Starting export of...` was used in the paper.
 
 ### Marginal Calculations
-The marginal calculations experiments (Table 2 and 3) can be reproduced from
+The marginal calculations experiments (in-memory and parallelization) can be reproduced from
 [marginals_inmemory.ipynb](marginals_inmemory.ipynb) and [marginals_throughput.ipynb](marginals_throughput.ipynb).
 
 ### Parallelization
-The synthesis executions table (Table 4) was generated from [pipeline.sh](pipeline.sh).
+The synthesis executions table was generated from [pipeline.sh](pipeline.sh).
 Run the following commands to reproduce all of the table.
 The results have to be extracted manually from the logs.
 The system will print out how many marginals are computed during synthesis
@@ -214,6 +215,8 @@ and the combined KL measure for the ref(erence) and syn(thetic) sets.
 # export PASTEUR=pasteur
 
 ./notebooks/paper/pipeline.sh tab_adult
+
+# Extended version only
 ./notebooks/paper/pipeline.sh mimic_tab_admissions
 
 ./notebooks/paper/pipeline.sh mimic_billion 1M
